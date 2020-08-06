@@ -71,7 +71,7 @@ class Parser():
           if subject[key] != 0 or key == 'худшая': 
             self.output += 'Оценка \"'+key + '\" - ' + str(subject[key]) + '\n'
       self.output += '\n'
-    self.output += '\n\n8 класс {0} \n'.format(str(self.students))
+    self.output += '\n\n8 класс - {0} \n'.format(str(self.students))
     subjects = []
     try:
       subjects.append(self.achiev8)
@@ -140,7 +140,7 @@ class Parser():
                   with open('dicts.py','a') as f:
                     f.write('\n    self.achiev7 = %s' % subject)
                   self.achiev7 = subject
-                elif method == 3
+                elif method == 3:
                   subject['title'] = self.method_decp[method]
                   with open('dicts.py','a') as f:
                     f.write('\n    self.math7 = %s' % subject)
