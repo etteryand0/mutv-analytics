@@ -2,6 +2,11 @@ from bs4 import BeautifulSoup # for parsing
 import requests # for GET request
 import sys # for abort
 
+# There is no proper explanation of code 'cause script
+# wasn't meant for public usage. I may delete this repo
+# after 1 week
+
+
 class Parser():
   def __init__(self, method,results):
     self.method_decp = {2:'Достижения',3:'Математика',4:'Естествознание',5:'Английский язык',6:'Итоги'}
@@ -19,10 +24,14 @@ class Parser():
       
       self.results = results # reset results
     self.sort_info()
-    print(self.achiev7)
     self.output()
   
   def output(self):
+    # There is some issue with dicts like Parser.math7
+    # something goes wrong and values in dict multiplies
+
+    # So i decided to write valid dicts into another file
+    # works well!
     from dicts import Dicts
     Dict = Dicts()
     self.math7 = Dict.math7
@@ -31,7 +40,6 @@ class Parser():
     self.math8 = Dict.math8
     self.achiev8 = Dict.achiev8
     self.summary8 = Dict.summary8
-    print(self.students7)
     self.output = '7 класс - {0} \n'.format(str(self.students7))
     subjects = []
     try:
@@ -94,16 +102,14 @@ class Parser():
           if subject[key] != 0 or key == 'худшая':
             self.output += 'Оценка \"'+key + '\" - ' + str(subject[key]) + '\n'
       self.output += '\n'
-    print(self.output)
+    print(self.output) # print ready-to-go output. Looks good
 
 
 
 
   def sort_info(self):
-      print('sort_info()')
       i = 6
       for classroom in [self.results7,self.results8]:
-        print('for classroom in self.results')
         i += 1
         for method in self.method:
             if method == 6:
@@ -112,21 +118,10 @@ class Parser():
               subject = {'title':'','0':0,'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0,'9':0,'10':0,'худшая':0,'лучшая':0,'средняя':0}
             else:
               subject = {'title':'','0':0,'1':0,'2':0,'3':0,'4':0,'5':0,'худшая':0,'лучшая':0,'средняя':0} 
-            try:
-                print('after subject assign')
-                print(self.achiev7)
-            except:
-                print()
-            print('{0}, {1}, {2}, {3}'.format(str(method), str(i), subject, '\n'))
+
             average,worst,best = 0, 5, 0
             z = 0
             for score in classroom[str(method)]:
-              try:
-                if z == 0 and i == 7:
-                  print('after score assign')
-                  print(self.achiev7)
-              except:
-                print()
               z+=1
               score = int(score)
               average += score
@@ -140,24 +135,15 @@ class Parser():
               subject['худшая'] = worst
               subject['лучшая'] = best
               if i == 7 and z == self.students7:
-                print('even before average')
-                try:
-                  print(self.achiev7)
-                except:
-                  print('error')
-                subject['средняя'] = round(average/self.students7,2)
                 if method == 2:
                   subject['title'] = self.method_decp[method]
                   with open('dicts.py','a') as f:
                     f.write('\n    self.achiev7 = %s' % subject)
                   self.achiev7 = subject
-                elif method == 3:
-                  #print('math called')
+                elif method == 3
                   subject['title'] = self.method_decp[method]
                   with open('dicts.py','a') as f:
                     f.write('\n    self.math7 = %s' % subject)
-                  print('Before amth assign')
-                  print(self.achiev7)
                   self.math7 = subject
                 elif method == 4:
                   subject['title'] = self.method_decp[method]
@@ -174,7 +160,6 @@ class Parser():
                   with open('dicts.py','a') as f:
                     f.write('\n    self.summary7 = %s' % subject)
                   self.summary7 = subject
-                print(self.achiev7)
               elif i == 8 and z == self.students: # i = 8
                 subject['средняя'] = round(average/self.students,2)
                 if method == 2:
@@ -251,4 +236,5 @@ else:
 
 Parser = Parser(method,results)
 
-print('@mutv\nБот статистика mutv')
+print('@mutv\nИсправленная бот статистика mutv')
+print('Исходный код/резервная копия: https://github.com/etteryan0/mutv-analytics/')
